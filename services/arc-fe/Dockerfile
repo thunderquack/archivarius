@@ -11,9 +11,9 @@ ARG VERSION
 RUN mkdir /tmp/repo
 
 # Clone the specific version of the repository (branch or tag)
-RUN git clone --branch $VERSION https://github.com/thunderquack/arc-fe.git /tmp/repo
+RUN git clone --branch master https://github.com/thunderquack/arc-fe.git /tmp/repo
 
-# Copy the repository content into the working directory
+# Copy the repository content into the working directory and remove the temporary directory
 RUN cp -r /tmp/repo/* . && rm -rf /tmp/repo
 
 # Install app dependencies
@@ -26,7 +26,10 @@ RUN npm run build --prod
 FROM nginx:alpine
 
 # Copy the built Angular files from the previous stage
-COPY --from=build /usr/src/app/dist/arc-fe /usr/share/nginx/html
+COPY --from=build /usr/src/app/dist/arc-fe/browser /usr/share/nginx/html
+
+# List files in the nginx html directory to verify the copy
+RUN ls -l /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
