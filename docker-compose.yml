@@ -1,0 +1,11 @@
+services:
+  arc-fe:
+    container_name: "arc-fe"
+    build:
+      context: ./services/arc-fe
+      args:
+        VERSION: 24.6.29
+    ports:
+      - "80:80"
+    environment:
+      - NODE_ENV=production
