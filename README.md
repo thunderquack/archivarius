@@ -1,2 +1,2 @@
-# archivarius
+# Archivarius
 Home archive
