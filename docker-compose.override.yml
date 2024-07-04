@@ -1,0 +1,22 @@
+services:
+  arc-fe:
+    ports:
+      - "80:80"
+
+  arc-be:
+    ports:
+      - "3000:3000"
+      - "5678:5678"
+    volumes:
+      - ../arc-be:/app
+    environment:
+      - FLASK_ENV=development
+
+  rabbitmq:
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  redis:
+    ports:
+      - "6379:6379"
