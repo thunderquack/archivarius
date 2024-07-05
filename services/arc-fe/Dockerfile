@@ -23,10 +23,13 @@ RUN npm install
 RUN npm run build --prod
 
 # Use a lightweight web server to serve the static files
-FROM nginx:alpine
+FROM nginx:bookworm
 
 # Copy the built Angular files from the previous stage
 COPY --from=build /usr/src/app/dist/arc-fe/browser /usr/share/nginx/html
+
+# Copying nginx config
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
 # List files in the nginx html directory to verify the copy
 RUN ls -l /usr/share/nginx/html

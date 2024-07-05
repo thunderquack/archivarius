@@ -1,5 +1,7 @@
 services:
   arc-fe:
+    volumes:
+      - ../arc-fe/dist/arc-fe/browser:/usr/share/nginx/html
     ports:
       - "80:80"
 
