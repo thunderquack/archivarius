@@ -3,6 +3,7 @@ services:
     container_name: "arc-fe"
     build:
       context: ./services/arc-fe
+      dockerfile: Dockerfile
       args:
         VERSION: master
     environment:
@@ -21,7 +22,7 @@ services:
       - SECRET_KEY=my_very_strong_secret
     depends_on:
       - rabbitmq
-      - redis      
+      - redis
     restart: unless-stopped
 
   rabbitmq:
@@ -29,7 +30,7 @@ services:
     container_name: "rabbitmq"
     environment:
       RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest 
+      RABBITMQ_DEFAULT_PASS: guest
 
   redis:
     image: "redis:alpine"
