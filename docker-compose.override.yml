@@ -1,5 +1,14 @@
 services:
   arc-fe:
+    #build:
+    #  context: ..
+    #  dockerfile: monorepo/services/arc-fe/Dockerfile.dev
+    #ports:
+    #  - "80:4200"
+    #environment:
+    #  - NODE_ENV=development
+    #volumes:
+    #  - ../arc-fe:/usr/src/app
     volumes:
       - ../arc-fe/dist/arc-fe/browser:/usr/share/nginx/html
     ports:

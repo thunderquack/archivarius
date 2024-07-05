@@ -7,12 +7,9 @@ WORKDIR /usr/src/app
 # Install Angular CLI globally
 RUN npm install -g @angular/cli
 
-# Install app dependencies
-COPY package*.json ./
-RUN npm install
+COPY arc-fe/package*.json .
 
-# Copy the application files
-COPY . .
+RUN npm install
 
 # Expose port 4200
 EXPOSE 4200
