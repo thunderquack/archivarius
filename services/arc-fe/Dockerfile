@@ -11,7 +11,7 @@ ARG VERSION
 RUN mkdir /tmp/repo
 
 # Clone the specific version of the repository (branch or tag)
-RUN git clone --branch master https://github.com/thunderquack/arc-fe.git /tmp/repo
+RUN git clone --branch $VERSION https://github.com/thunderquack/arc-fe.git /tmp/repo
 
 # Copy the repository content into the working directory and remove the temporary directory
 RUN cp -r /tmp/repo/* . && rm -rf /tmp/repo
