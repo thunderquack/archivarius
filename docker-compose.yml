@@ -44,4 +44,13 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: arcdb
     volumes:
-      - ./services/arc-db/pgdata:/var/lib/postgresql/data  
+      - ./services/arc-db/pgdata:/var/lib/postgresql/data
+
+  tesseract:
+    image: hertzg/tesseract-server:latest
+    container_name: "tesseract"
+    environment:
+      - TS_PORT=8080
+    ports:
+      - "8080:8080"
+    restart: unless-stopped

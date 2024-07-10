@@ -35,3 +35,7 @@ services:
   arc-db:
     ports:
       - "5432:5432"
+
+  tesseract:
+    ports:
+      - "8884:8884"
