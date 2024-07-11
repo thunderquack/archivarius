@@ -1,23 +1,33 @@
-FROM python:3.12-slim
+FROM mcr.microsoft.com/cbl-mariner/base/python:3 AS builder
 
-# Set the working directory
-WORKDIR /app
+RUN tdnf install -y tar ca-certificates build-essential cmake curl python3-devel python3-setuptools python3-wheel python3-pip python3-numpy python3-flatbuffers python3-packaging python3-protobuf
 
-# Build arguments
+ADD . /code
+
+RUN /code/scripts/install_cmake.sh
+
+RUN cd /code && /bin/bash ./build.sh --allow_running_as_root --skip_submodule_sync --config Release --build_wheel --update --build --parallel --cmake_extra_defines ONNXRUNTIME_VERSION=$(cat ./VERSION_NUMBER)
+
+FROM mcr.microsoft.com/cbl-mariner/base/python:3
+
+COPY --from=builder /code/build/Linux/Release/dist /root
+COPY --from=builder /code/dockerfiles/LICENSE-IMAGE.txt /code/LICENSE-IMAGE.txt
+
+RUN tdnf install -y ca-certificates python3-setuptools python3-wheel python3-pip python3-numpy python3-flatbuffers python3-packaging python3-protobuf python3-mpmath python3-sympy && \
+    python3 -m pip install coloredlogs humanfriendly && \
+    python3 -m pip install --no-index --find-links /root onnxruntime && \
+    rm -rf /root/*.whl
+
 ARG VERSION
 
-# Create a temporary directory for cloning the repository
+WORKDIR /app
+
 RUN mkdir /tmp/repo
 
-RUN apt-get update && apt-get install -y git && apt-get clean
-
-# Clone the specific version of the repository (branch or tag)
 RUN git clone --branch $VERSION https://github.com/thunderquack/arc-ai.git /tmp/repo
 
-# Copy the repository content into the working directory and remove the temporary directory
 RUN cp -r /tmp/repo/* . && rm -rf /tmp/repo
 
-# Install app dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 8000
