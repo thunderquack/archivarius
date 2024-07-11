@@ -25,6 +25,14 @@ services:
       - redis
     restart: unless-stopped
 
+  arc-ai:
+    container_name: "arc-ai"
+    build:
+      context: ./services/arc-ai
+      args:
+        VERSION: master
+    restart: unless-stopped
+    
   rabbitmq:
     image: "rabbitmq:3-management"
     container_name: "rabbitmq"
@@ -51,10 +59,4 @@ services:
     container_name: "tesseract"
     environment:
       - TS_PORT=8080
-    restart: unless-stopped
-
-  vllm:
-    build:
-      context: ./services/vllm
-      dockerfile: Dockerfile
     restart: unless-stopped

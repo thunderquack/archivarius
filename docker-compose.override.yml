@@ -1,14 +1,5 @@
 services:
   arc-fe:
-    #build:
-    #  context: ..
-    #  dockerfile: monorepo/services/arc-fe/Dockerfile.dev
-    #ports:
-    #  - "80:4200"
-    #environment:
-    #  - NODE_ENV=development
-    #volumes:
-    #  - ../arc-fe:/usr/src/app
     volumes:
       - ../arc-fe/dist/arc-fe/browser:/usr/share/nginx/html
     ports:
@@ -22,6 +13,10 @@ services:
       - ../arc-be:/app
     environment:
       - FLASK_ENV=development
+
+  arc-ai:
+    ports:
+      - "8000:8000"
 
   rabbitmq:
     ports:
@@ -38,8 +33,4 @@ services:
 
   tesseract:
     ports:
-      - "8884:8884"
-  
-  vllm:
-    ports:
-      - "8000:8000"
+      - "8884:8884"  
