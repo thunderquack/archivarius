@@ -2,9 +2,13 @@ FROM mcr.microsoft.com/cbl-mariner/base/python:3 AS builder
 
 RUN tdnf install -y tar ca-certificates build-essential cmake curl python3-devel python3-setuptools python3-wheel python3-pip python3-numpy python3-flatbuffers python3-packaging python3-protobuf
 
-ADD . /code
+RUN tdnf install -y git
 
-RUN /code/scripts/install_cmake.sh
+ARG ONNXRUNTIME_VERSION
+
+RUN git clone --branch $ONNXRUNTIME_VERSION https://github.com/microsoft/onnxruntime.git /code
+
+RUN /code/dockerfiles/scripts/install_cmake.sh
 
 RUN cd /code && /bin/bash ./build.sh --allow_running_as_root --skip_submodule_sync --config Release --build_wheel --update --build --parallel --cmake_extra_defines ONNXRUNTIME_VERSION=$(cat ./VERSION_NUMBER)
 
@@ -23,6 +27,8 @@ ARG VERSION
 WORKDIR /app
 
 RUN mkdir /tmp/repo
+
+RUN tdnf install -y git
 
 RUN git clone --branch $VERSION https://github.com/thunderquack/arc-ai.git /tmp/repo
 

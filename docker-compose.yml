@@ -31,6 +31,7 @@ services:
       context: ./services/arc-ai
       args:
         VERSION: master
+        ONNXRUNTIME_VERSION: v1.18.1
     restart: unless-stopped
     
   rabbitmq:
