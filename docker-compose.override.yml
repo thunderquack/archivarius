@@ -15,8 +15,11 @@ services:
       - FLASK_ENV=development
 
   arc-ai:
+    volumes:
+      - ../arc-ai:/app
     ports:
-      - "8000:8000"
+      - "8010:8010"
+      - "5679:5679"
 
   rabbitmq:
     ports:
@@ -33,4 +36,4 @@ services:
 
   tesseract:
     ports:
-      - "8884:8884"  
+      - "8884:8884"

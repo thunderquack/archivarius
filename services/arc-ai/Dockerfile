@@ -30,12 +30,14 @@ RUN mkdir /tmp/repo
 
 RUN tdnf install -y git
 
+RUN echo hi
+
 RUN git clone --branch $VERSION https://github.com/thunderquack/arc-ai.git /tmp/repo
 
 RUN cp -r /tmp/repo/* . && rm -rf /tmp/repo
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-EXPOSE 8000
+EXPOSE 8010 5679
 
 CMD ["python", "app.py"]
