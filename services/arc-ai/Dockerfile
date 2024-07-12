@@ -1,10 +1,12 @@
 FROM python:3.12-slim
 
-ARG VERSION
-
 WORKDIR /app
 
 RUN mkdir /tmp/repo
+
+RUN apt-get update && apt-get install -y git && apt-get clean
+
+ARG VERSION
 
 RUN git clone --branch $VERSION https://github.com/thunderquack/arc-ai.git /tmp/repo
 
