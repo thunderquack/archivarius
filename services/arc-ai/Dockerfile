@@ -18,4 +18,4 @@ RUN huggingface-cli download microsoft/Phi-3-mini-128k-instruct-onnx --include c
 
 EXPOSE 8010 5679
 
-CMD ["python3", "app.py"]
+CMD ["python", "app.py"]
