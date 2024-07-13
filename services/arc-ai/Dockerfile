@@ -14,7 +14,7 @@ RUN cp -r /tmp/repo/* . && rm -rf /tmp/repo
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN huggingface-cli download microsoft/Phi-3-mini-128k-instruct-onnx --include cpu_and_mobile/cpu-int4-rtn-block-32-acc-level-4/* --local-dir /models/Phi-3-mini-128k-instruct-onnx
+RUN huggingface-cli download microsoft/Phi-3-mini-128k-instruct-onnx --include cpu_and_mobile/cpu-int4-rtn-block-32-acc-level-4/* --local-dir /models/Phi-3
 
 EXPOSE 8010 5679
 
