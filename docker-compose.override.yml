@@ -14,6 +14,10 @@ services:
     environment:
       - FLASK_ENV=development
 
+  ollama:
+    ports:
+      - "11434:11434"
+
   arc-ai:
     volumes:
       - ../arc-ai:/app
