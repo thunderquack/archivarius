@@ -34,7 +34,6 @@ services:
     networks:
       - ai-network
     restart: unless-stopped
-    command: /bin/sh -c "ollama pull mistral-nemo && tail -f /dev/null"
 
   arc-ai:
     container_name: "arc-ai"
@@ -45,6 +44,10 @@ services:
     networks:
       - ai-network
     restart: unless-stopped
+    depends_on:
+      - redis
+      - rabbitmq
+      - ollama
     
   rabbitmq:
     image: "rabbitmq:3-management"
